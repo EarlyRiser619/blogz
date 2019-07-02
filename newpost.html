@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+<h1>New Post:</h1>
+    <form action="POST">
+        <label>
+            Title:
+            <input type="text" name="title" />
+        </label>
+        <label>
+            Entry:
+            <input type="text" name="blog-entry" />
+        </label>
+        <input type="submit" value="Add Entry" />
+    </form>
+
+    <hr />
+
+    {% if tasks|length == 0 %}
+    <p>No Entries Yet</p>
+    {% else %}
+
+        <ul>
+            {% for blog in blogs %}
+            <li>{{blog.title)}}
+                {{blog.entry}}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
+{% block content %}
+
+{% end block %}
