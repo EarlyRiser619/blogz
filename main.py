@@ -16,18 +16,35 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
-@app.route("/", methods=['POST', 'GET'])
+@app.route("/blog", methods=['POST', 'GET'])
 def index():
+    title_error=''
+    entry_error=''
     if request.method == "POST":
         blog_title = request.form['title']
-        blog_entry = request.form['blog-entry']
+        blog_entry = request.form['body']
         new_blog = Blog(blog_title, blog_entry)
+        if (not blog_title):
+            title_error = "Field must be filled in" 
+        if (not blog_entry):
+            entry_error= "Field must be filled in"
+        if title_error or entry_error:
+            return render_template("newpost.html", title_error=title_error, entry_error=entry_error, page_title="New Blog Entry")
+        db.session.add(new_blog)
+        db.session.commit()
+        blogs = Blog.query.all()
+        return render_template("blog.html", blogs=blogs, page_title="Build A Blog")
+
+    blogs = Blog.query.all()
+    return render_template("blog.html", page_title="Build A Blog", blogs=blogs)
 
 
-    return render_template("newpost.html")
+@app.route("/newpost", methods=['POST', 'GET'])
+def new_post():
+    #new_title = request.form['title']
+    #new_body = request.form['body']
 
-
-
+    return render_template("newpost.html", page_title="New Blog Entry")
 
 if __name__ == "__main__":
     app.run()
