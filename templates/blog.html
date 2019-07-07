@@ -11,14 +11,15 @@
     {% else %}
 
         {% for blog in blogs %}
-        <h2>{{blog.title}}</h2><br>
-            {{blog.body}}
-        <hr />
+        <form action="/indiv" type='hidden' name='blog-id' value={{blog.id}}>
+            <h2><a href ="/indiv">{{blog.title}}
+            </a></h2><br>
+                {{blog.body}}
+            <hr />
+        
         {% endfor %}
 
     {% endif %}
 
-        </label>
-    </form>
 
 {% endblock %}
