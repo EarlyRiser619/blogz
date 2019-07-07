@@ -39,14 +39,15 @@ def index():
     return render_template("blog.html", page_title="Build A Blog", blogs=blogs)
 
 
+@app.route("/indiv", methods=['GET'])
 def indiv_post():
     blog_id = int(request.form['blog-id'])
-    indiv_blog = Task.query.get(blog_id)
+    indiv_blog = Blog.query.get(blog_id)
     ## do I need to include a statement about some kind of GET request?? Or a Blog.query.'something'(??)
     return render_template("indiv.html", page_title="Blog Post", indiv_blog=indiv_blog)
 
 
-@app.route("/newpost", methods=['POST', 'GET'])
+@app.route("/newpost", methods=['GET'])
 def new_post():
     #new_title = request.form['title']
     #new_body = request.form['body']

@@ -11,8 +11,7 @@
     {% else %}
 
         {% for blog in blogs %}
-        <form action="/indiv" type='hidden' name='blog-id' value={{blog.id}}>
-            <h2><a href ="/indiv">{{blog.title}}
+            <h2><a href ="/indiv" type='hidden' name='blog-id' value='{{blog.id}}'>{{blog.title}}
             </a></h2><br>
                 {{blog.body}}
             <hr />
