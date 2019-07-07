@@ -8,6 +8,13 @@
 
     {% if blogs|length == 0 %}
     <p><h2>No Entries Yet</h2></p>
+
+    {% elif indiv_blog %}
+    
+        <h2>{{blog.title}}</h2><br>
+            {{blog.body}}
+        <hr />
+
     {% else %}
 
         {% for blog in blogs %}
