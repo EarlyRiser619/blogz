@@ -39,11 +39,11 @@ def index():
     return render_template("blog.html", page_title="Build A Blog", blogs=blogs)
 
 
-@app.route("/indiv", methods=['GET'])
+@app.route("/blog", methods=['GET'])
 def indiv_post():
-    blog_id = int(request.form['blog-id'])
+    blog_id = request.args.get(blog.id)
     indiv_blog = Blog.query.get(blog_id)
-    ## do I need to include a statement about some kind of GET request?? Or a Blog.query.'something'(??)
+    
     return render_template("indiv.html", page_title="Blog Post", indiv_blog=indiv_blog)
 
 

@@ -11,11 +11,12 @@
     {% else %}
 
         {% for blog in blogs %}
-            <h2><a href ="/indiv" type='hidden' name='blog-id' value='{{blog.id}}'>{{blog.title}}
+        
+            <h2><a href ="/blog?id={{blog.id}}">{{blog.title}}
             </a></h2><br>
                 {{blog.body}}
             <hr />
-        
+     
         {% endfor %}
 
     {% endif %}
