@@ -17,7 +17,20 @@ class Blog(db.Model):
         self.body = body
 
 @app.route("/blog", methods=['POST', 'GET'])
-def index():
+def index():  
+    if request.args.get(Blog.id):
+        blog_id = int(request.args.get(Blog.id))
+        indiv_blog = Blog.query.get(blog_id)
+        new_title = indiv_blog(Blog.title)
+        new_body = indiv_blog(Blog.body)
+        return render_template("blog.html?id=Blog.id", page_title="Build A Blog", new_title=new_title, new_body=new_body)
+    elif request.method == "GET":
+        blogs = Blog.query.all()
+        return render_template("blog.html", blogs=blogs, page_title="Build A Blog")        
+
+
+@app.route("/newpost", methods=['POST', 'GET'])
+def new_post():
     title_error=''
     entry_error=''
     if request.method == "POST":
@@ -32,23 +45,9 @@ def index():
             return render_template("newpost.html", title_error=title_error, entry_error=entry_error, page_title="New Blog Entry")
         db.session.add(new_blog)
         db.session.commit()
-        blogs = Blog.query.all()
-        return render_template("blog.html", blogs=blogs, page_title="Build A Blog")
-
-    blogs = Blog.query.all()
-    return render_template("blog.html", page_title="Build A Blog", blogs=blogs)
-
-
-@app.route("/blog?id={{blog.id}}", methods=['GET'])
-def indiv_post():
-    blog_id = request.args.get(blog.id)
-    indiv_blog = Blog.query.get(blog_id)
-    
-    return render_template("blog.html", page_title="Blog Post", indiv_blog=indiv_blog)
-
-
-@app.route("/newpost", methods=['GET'])
-def new_post():
+        blog_id = request.args.get(new_blog.id)
+        return render_template("blog.html")
+       
     return render_template("newpost.html", page_title="New Blog Entry")
 
 
