@@ -24,7 +24,7 @@ def index():
         new_title = indiv_blog.title
         new_body = indiv_blog.body
         return render_template("indiv_blog.html", page_title="Build A Blog", new_title=new_title, new_body=new_body)
-    elif request.method == "GET":
+    else:
         blogs = Blog.query.all()
         return render_template("blog.html", blogs=blogs, page_title="Build A Blog")        
 
@@ -36,18 +36,18 @@ def new_post():
     if request.method == "POST":
         blog_title = request.form['title']
         blog_entry = request.form['body']
-        new_blog = Blog(blog_title, blog_entry)
         if (not blog_title):
             title_error = "Field must be filled in" 
         if (not blog_entry):
             entry_error= "Field must be filled in"
         if title_error or entry_error:
             return render_template("newpost.html", title_error=title_error, entry_error=entry_error, page_title="New Blog Entry")
+        new_blog = Blog(blog_title, blog_entry)
         db.session.add(new_blog)
         db.session.commit()
-        blog_id = request.args.get(new_blog.id)
-        return render_template("blog.html")
-       
+        blog_id = new_blog.id
+        return redirect("blog.html")
+       #why aren't my blog entries saving to my database? what else do I need to do with the above redirect??
     return render_template("newpost.html", page_title="New Blog Entry")
 
 
