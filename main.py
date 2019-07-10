@@ -46,8 +46,7 @@ def new_post():
         db.session.add(new_blog)
         db.session.commit()
         blog_id = new_blog.id
-        return redirect("blog.html")
-       #why aren't my blog entries saving to my database? what else do I need to do with the above redirect??
+        return redirect("/blog?id=" + str(blog_id))
     return render_template("newpost.html", page_title="New Blog Entry")
 
 
