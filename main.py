@@ -18,12 +18,12 @@ class Blog(db.Model):
 
 @app.route("/blog", methods=['POST', 'GET'])
 def index():  
-    if request.args.get(Blog.id):
-        blog_id = int(request.args.get(Blog.id))
+    if request.args.get('id'):
+        blog_id = int(request.args.get('id'))
         indiv_blog = Blog.query.get(blog_id)
-        new_title = indiv_blog(Blog.title)
-        new_body = indiv_blog(Blog.body)
-        return render_template("blog.html?id=Blog.id", page_title="Build A Blog", new_title=new_title, new_body=new_body)
+        new_title = indiv_blog.title
+        new_body = indiv_blog.body
+        return render_template("indiv_blog.html", page_title="Build A Blog", new_title=new_title, new_body=new_body)
     elif request.method == "GET":
         blogs = Blog.query.all()
         return render_template("blog.html", blogs=blogs, page_title="Build A Blog")        
