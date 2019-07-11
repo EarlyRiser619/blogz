@@ -4,14 +4,14 @@
 {% block content %}
 <h1>New Blog Entry:</h1>
     <form action='/newpost' method="POST">
-        <label>
-            Title:
+        <label class='input'>
+            Title:<br>
             <input type="text" name="title" /><span class='error'>{{title_error}}</span>
         </label>
         <br>
-        <label>
-            Entry:
-            <input type="text" name="body" /><span class='error'>{{entry_error}}</span>
+        <label class='input'>
+            Entry:<br>
+            <textarea rows="5" cols="50" name="body"></textarea><span class='error'>{{entry_error}}</span>
         </label>
         <br>
         <input type="submit" value="Add Entry" />

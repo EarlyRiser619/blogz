@@ -1,0 +1,38 @@
+
+h1 {
+    text-align: center; 
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+}
+
+h2 {
+    text-align: center; 
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+}
+
+.error {
+    color: red;
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+    font-variant: small-caps;
+}
+
+.input{
+    align-self: center;
+    text-align: center;
+    font-variant: small-caps;
+    font-family: "Verdana", "Arial", sans-serif;
+}
+
+p.body{
+    text-align: center; 
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+}
+
+body{
+    background-color: lightcyan; 
+}
+
+.links {
+    color: darkorchid;
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+    font-variant: small-caps;
+}
