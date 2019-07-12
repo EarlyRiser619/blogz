@@ -17,7 +17,6 @@ class Blog(db.Model):
     def __init__(self, title, body):
         self.title = title
         self.body = body
-        self.date = date
 
 @app.route("/blog", methods=['POST', 'GET'])
 def index():  
@@ -27,7 +26,7 @@ def index():
         new_title = indiv_blog.title
         new_body = indiv_blog.body
         date = indiv_blog.date
-        return render_template("indiv_blog.html", page_title="Build A Blog", new_title=new_title, new_body=new_body)
+        return render_template("indiv_blog.html", page_title="Build A Blog", new_title=new_title, new_body=new_body, date=date)
     else:
         blogs = Blog.query.all()
         return render_template("blog.html", blogs=blogs, page_title="Build A Blog")        

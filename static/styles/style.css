@@ -22,17 +22,30 @@ h2 {
     font-family: "Verdana", "Arial", sans-serif;
 }
 
-p.body{
-    text-align: center; 
+p.entry{
+    align: center; 
     font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body{
     background-color: lightcyan; 
+    width: 800px;
+    align: center;
+    margin-left: auto;
+    margin-right: auto; 
 }
 
 .links {
     color: darkorchid;
     font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
     font-variant: small-caps;
+}
+
+p.date{
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+    font-style: italic;
+    text-align: center;
 }
