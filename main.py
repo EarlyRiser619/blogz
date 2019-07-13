@@ -4,9 +4,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:coding@localhost:3306/build-a-blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:MyNewPass@localhost:3306/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
+
+class User(db.Model):
+    
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -51,6 +54,22 @@ def new_post():
         blog_id = new_blog.id
         return redirect("/blog?id=" + str(blog_id))
     return render_template("newpost.html", page_title="New Blog Entry")
+
+
+@app.route("/signup")
+
+
+@app.route("/login")
+
+
+@app.route("/index")
+
+
+@app.route("/logout", method="POST")
+def logout():
+    del session['']
+    redirect('/blog')
+
 
 
 
