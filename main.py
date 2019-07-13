@@ -8,18 +8,30 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:MyNewPass@localho
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(300))
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, title, body):
+    def __init__(self, title, body, owner):
         self.title = title
         self.body = body
+        self.owner = owner
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120))
+    password = db.Column(db.String(120))
+    blogs = db.relationship('Blog', backref='owner')
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
 
 @app.route("/blog", methods=['POST', 'GET'])
 def index():  
@@ -48,7 +60,7 @@ def new_post():
             entry_error= "Field must be filled in"
         if title_error or entry_error:
             return render_template("newpost.html", title_error=title_error, entry_error=entry_error, page_title="New Blog Entry")
-        new_blog = Blog(blog_title, blog_entry)
+        new_blog = Blog(blog_title, blog_entry, owner)
         db.session.add(new_blog)
         db.session.commit()
         blog_id = new_blog.id
@@ -56,19 +68,19 @@ def new_post():
     return render_template("newpost.html", page_title="New Blog Entry")
 
 
-@app.route("/signup")
+#@app.route("/signup")
 
 
-@app.route("/login")
+#@app.route("/login")
 
 
-@app.route("/index")
+#@app.route("/index")
 
 
-@app.route("/logout", method="POST")
-def logout():
-    del session['']
-    redirect('/blog')
+#@app.route("/logout", method="POST")
+#def logout():
+#    del session['']
+#    redirect('/blog')
 
 
 
