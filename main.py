@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -7,7 +7,7 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:MyNewPass@localhost:3306/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
-
+app.secret_key = '@b(D#F&hi'',>?renee'
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +71,23 @@ def new_post():
 #@app.route("/signup")
 
 
-#@app.route("/login")
+@app.route("/login", methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username).first()
+        if user and user.password == password:
+            session['username'] = username
+            flash("Logged in")
+            return redirect('/newpost')
+        if user and user.password != password:
+            flash('User password incorrect', 'error')
+            return redirect('/login')
+        if not user:
+            flash('User name does not exist', 'error')
+    return render_template('login.html')
+
 
 
 #@app.route("/index")
