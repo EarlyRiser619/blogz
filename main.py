@@ -68,7 +68,38 @@ def new_post():
     return render_template("newpost.html", page_title="New Blog Entry")
 
 
-#@app.route("/signup")
+@app.route("/signup", methods=['POST', 'GET'])
+def sign_up():
+    user_error = False
+    pass_error = False
+    ver_error = False
+    if request.method == 'POST':
+        username = request.form['username']
+        if (not username) or (username.strip() == '') or (len(username) < 3) or len(username) > 20 or (' ' in username):
+            flash('Please re-type your name. It must contain between 3 and 20 characters and have no spaces', 'error')
+            user_error = True
+        password = request.form['password']
+        if (not password) or (password.strip() == '') or (len(password)< 3) or (len(password) > 20) or (' ' in password):
+            flash('Please type in a valid password. It must contain between 3 and 20 characters and have no spaces', 'error')
+            pass_error = True
+        verify = request.form['verify']
+        if (not password) or (password.strip() == '') or(verify != password):
+            flash('Passwords do not match', 'error')
+            ver_error = True
+        if user_error or pass_error or ver_error:
+            return redirect('/signup')
+
+        existing_user = User.query.filter_by(username=username).first()
+        if not existing_user:
+            new_user = User(username, password)
+            db.session.add(new_user)
+            db.session.commit()
+            session['username'] = username
+            return redirect('/newpost')
+        else:
+            flash('This username already exists', 'error')
+
+    return render_template('signup.html')
 
 
 @app.route("/login", methods=['POST', 'GET'])
@@ -93,10 +124,10 @@ def login():
 #@app.route("/index")
 
 
-#@app.route("/logout", method="POST")
-#def logout():
-#    del session['']
-#    redirect('/blog')
+@app.route("/logout")
+def logout():
+    del session['username']
+    return redirect('/blog')
 
 
 
