@@ -12,7 +12,7 @@ app.secret_key = '@b(D#F&hi'',>?renee'
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
-    body = db.Column(db.String(300))
+    body = db.Column(db.String(1000))
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -33,6 +33,13 @@ class User(db.Model):
         self.password = password
 
 
+@app.before_request
+def require_login():
+    allowed_routes=['login', 'sign_up', 'index']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/login')
+
+
 @app.route("/blog", methods=['POST', 'GET'])
 def index():  
     if request.args.get('id'):
@@ -51,6 +58,8 @@ def index():
 def new_post():
     title_error=''
     entry_error=''
+    owner = User.query.filter_by(username=session['username']).first()
+
     if request.method == "POST":
         blog_title = request.form['title']
         blog_entry = request.form['body']
