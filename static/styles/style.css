@@ -49,3 +49,15 @@ p.date{
     font-style: italic;
     text-align: center;
 }
+
+ul.authors{
+    text-align: left; 
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+    margin-left: 100px;
+    list-style-type: square;
+}
+
+p.author{
+    font-family: "Lucida Sans", "Verdana", "Arial", sans-serif;
+    font-variant: inherit;
+}

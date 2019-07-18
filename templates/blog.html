@@ -17,8 +17,9 @@
         
             <h2><a href ="/blog?id={{blog.id}}">{{blog.title}}
             </a></h2>
-            <p>{{blog.date}}<br>
-                <p class='entry'>{{blog.body}}</class>
+            <p class='author'>Written by <a href="/blog?user={{blog.owner.id}}">{{blog.owner.username}}</a></p>
+            <p class='date'>{{blog.date}}<br>
+            <p class='entry'>{{blog.body}}</class>
                     
             <hr />
      

@@ -35,20 +35,26 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes=['login', 'sign_up', 'index']
+    allowed_routes=['login', 'sign_up', 'bloggies', 'index']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
 
 @app.route("/blog", methods=['POST', 'GET'])
-def index():  
+def bloggies():  
     if request.args.get('id'):
         blog_id = int(request.args.get('id'))
         indiv_blog = Blog.query.get(blog_id)
-        new_title = indiv_blog.title
-        new_body = indiv_blog.body
-        date = indiv_blog.date
-        return render_template("indiv_blog.html", page_title="Build A Blog", new_title=new_title, new_body=new_body, date=date)
+        #new_title = indiv_blog.title
+        #new_body = indiv_blog.body
+        #date = indiv_blog.date
+        #author = indiv_blog.owner.username
+        return render_template("indiv_blog.html", page_title="Build A Blog", indiv_blog=indiv_blog)
+    if request.args.get('user'):
+        user_id = int(request.args.get('user'))
+        author = User.query.get(user_id)
+        blogs = author.blogs
+        return render_template("singleUser.html", page_title="{{author.username}}'s Blog", author=author, blogs=blogs)
     else:
         blogs = Blog.query.all()
         return render_template("blog.html", blogs=blogs, page_title="Build A Blog")        
@@ -130,7 +136,10 @@ def login():
 
 
 
-#@app.route("/index")
+@app.route("/")
+def index():
+    authors = User.query.all()
+    return render_template('index.html', authors=authors, page_title="Author List")
 
 
 @app.route("/logout")

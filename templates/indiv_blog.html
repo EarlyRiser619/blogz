@@ -2,9 +2,10 @@
 
 {% block content %}
     
-    <h1>{{new_title}}</h1><br>
-    <p class='body'>{{new_body}}</p>
-    <p class='date'>{{date}}</p>
+    <h1>{{indiv_blog.title}}</h1><br>
+    <p class='author'>Written by <a href="/blog?user={{indiv_blog.owner.id}}">{{indiv_blog.owner.username}}</a></p>
+    <p class='body'>{{indiv_blog.body}}</p>
+    <p class='date'>{{indiv_blog.date}}</p>
 <hr />
 
 {% endblock %}
